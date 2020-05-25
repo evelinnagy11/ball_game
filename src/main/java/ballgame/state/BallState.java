@@ -16,18 +16,22 @@ public class BallState implements Cloneable {
      * The array representing the initial configuration of the tray.
      */
     public static final int[][] INITIAL = {
-            {1, 1, 1},
-            {1, 0, 1},
-            {1, 1, 1}
+            {2, 4, 10, 3, 4},
+            {5, 0, 3, 0, 8},
+            {6, 0, 0, 0, 4},
+            {2, 0, 7, 0, 9},
+            {6, 7, 11, 6, 8}
     };
 
     /**
      * The array representing a near-goal configuration of the tray.
      */
     public static final int[][] NEAR_GOAL = {
-            {1, 0, 2},
-            {3, 5, 2},
-            {6, 1, 5}
+            {2, 4, 10, 3, 4},
+            {5, 0, 3, 0, 8},
+            {6, 0, 0, 0, 4},
+            {2, 0, 7, 0, 9},
+            {6, 7, 11, 6, 8}
     };
 
     /**
@@ -73,12 +77,12 @@ public class BallState implements Cloneable {
     }
 
     private boolean isValidTray(int[][] a) {
-        if (a == null || a.length != 3) {
+        if (a == null || a.length != 5) {
             return false;
         }
         boolean foundEmpty = false;
         for (int[] row : a) {
-            if (row == null || row.length != 3) {
+            if (row == null || row.length != 5) {
                 return false;
             }
             for (int space : row) {
@@ -97,9 +101,9 @@ public class BallState implements Cloneable {
     }
 
     private void initTray(int[][] a) {
-        this.tray = new Ball[3][3];
-        for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 3; ++j) {
+        this.tray = new Ball[5][5];
+        for (int i = 0; i < 5; ++i) {
+            for (int j = 0; j < 5; ++j) {
                 if ((this.tray[i][j] = Ball.of(a[i][j])) == Ball.EMPTY) {
                     emptyRow = i;
                     emptyCol = j;
@@ -134,7 +138,7 @@ public class BallState implements Cloneable {
      * to the empty space, {@code false} otherwise
      */
     public boolean canRollToEmptySpace(int row, int col) {
-        return 0 <= row && row <= 2 && 0 <= col && col <= 2 &&
+        return 0 <= row && row <= 4 && 0 <= col && col <= 4 &&
                 Math.abs(emptyRow - row) + Math.abs(emptyCol - col) == 1;
     }
 
