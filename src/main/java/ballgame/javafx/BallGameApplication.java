@@ -15,13 +15,13 @@ import javax.inject.Inject;
 import java.util.List;
 
 @Slf4j
-public class RollingCubesApplication extends Application {
+public class BallGameApplication extends Application {
 
     private GuiceContext context = new GuiceContext(this, () -> List.of(
             new AbstractModule() {
                 @Override
                 protected void configure() {
-                     install(new PersistenceModule("rolling-cubes"));
+                     install(new PersistenceModule("ball_game"));
                      bind(GameResultDao.class);
                  }
             }

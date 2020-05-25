@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Data
 @Slf4j
-public class RollingCubesState implements Cloneable {
+public class BallState implements Cloneable {
 
     /**
      * The array representing the initial configuration of the tray.
@@ -34,7 +34,7 @@ public class RollingCubesState implements Cloneable {
      * The array storing the current configuration of the tray.
      */
     @Setter(AccessLevel.NONE)
-    private Cube[][] tray;
+    private Ball[][] tray;
 
     /**
      * The row of the empty space.
@@ -52,7 +52,7 @@ public class RollingCubesState implements Cloneable {
      * Creates a {@code RollingCubesState} object representing the (original)
      * initial state of the puzzle.
      */
-    public RollingCubesState() {
+    public BallState() {
         this(INITIAL);
     }
 
@@ -65,7 +65,7 @@ public class RollingCubesState implements Cloneable {
      * @throws IllegalArgumentException if the array does not represent a valid
      *                                  configuration of the tray
      */
-    public RollingCubesState(int[][] a) {
+    public BallState(int[][] a) {
         if (!isValidTray(a)) {
             throw new IllegalArgumentException();
         }
@@ -82,10 +82,10 @@ public class RollingCubesState implements Cloneable {
                 return false;
             }
             for (int space : row) {
-                if (space < 0 || space >= Cube.values().length) {
+                if (space < 0 || space >= Ball.values().length) {
                     return false;
                 }
-                if (space == Cube.EMPTY.getValue()) {
+                if (space == Ball.EMPTY.getValue()) {
                     if (foundEmpty) {
                         return false;
                     }
@@ -97,10 +97,10 @@ public class RollingCubesState implements Cloneable {
     }
 
     private void initTray(int[][] a) {
-        this.tray = new Cube[3][3];
+        this.tray = new Ball[3][3];
         for (int i = 0; i < 3; ++i) {
             for (int j = 0; j < 3; ++j) {
-                if ((this.tray[i][j] = Cube.of(a[i][j])) == Cube.EMPTY) {
+                if ((this.tray[i][j] = Ball.of(a[i][j])) == Ball.EMPTY) {
                     emptyRow = i;
                     emptyCol = j;
                 }
@@ -114,9 +114,9 @@ public class RollingCubesState implements Cloneable {
      * @return {@code true} if the puzzle is solved, {@code false} otherwise
      */
     public boolean isSolved() {
-        for (Cube[] row : tray) {
-            for (Cube cube : row) {
-                if (cube != Cube.CUBE6 && cube != Cube.EMPTY) {
+        for (Ball[] row : tray) {
+            for (Ball ball : row) {
+                if (ball != Ball.CUBE6 && ball != Ball.EMPTY) {
                     return false;
                 }
             }
@@ -168,18 +168,18 @@ public class RollingCubesState implements Cloneable {
         Direction direction = getRollDirection(row, col);
         log.info("Cube at ({},{}) is rolled to {}", row, col, direction);
         tray[emptyRow][emptyCol] = tray[row][col].rollTo(direction);
-        tray[row][col] = Cube.EMPTY;
+        tray[row][col] = Ball.EMPTY;
         emptyRow = row;
         emptyCol = col;
     }
 
-    public RollingCubesState clone() {
-        RollingCubesState copy = null;
+    public BallState clone() {
+        BallState copy = null;
         try {
-            copy = (RollingCubesState) super.clone();
+            copy = (BallState) super.clone();
         } catch (CloneNotSupportedException e) {
         }
-        copy.tray = new Cube[tray.length][];
+        copy.tray = new Ball[tray.length][];
         for (int i = 0; i < tray.length; ++i) {
             copy.tray[i] = tray[i].clone();
         }
@@ -188,9 +188,9 @@ public class RollingCubesState implements Cloneable {
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (Cube[] row : tray) {
-            for (Cube cube : row) {
-                sb.append(cube).append(' ');
+        for (Ball[] row : tray) {
+            for (Ball ball : row) {
+                sb.append(ball).append(' ');
             }
             sb.append('\n');
         }
@@ -198,7 +198,7 @@ public class RollingCubesState implements Cloneable {
     }
 
     public static void main(String[] args) {
-        RollingCubesState state = new RollingCubesState();
+        BallState state = new BallState();
         System.out.println(state);
         state.rollToEmptySpace(0, 1);
         System.out.println(state);

@@ -8,21 +8,14 @@
     <version>1.0</version>
     <description>The rolling cubes puzzle game.</description>
     <scm>
-        <connection>scm:git:https://github.com/jeszy75/rolling-cubes-game.git</connection>
-        <developerConnection>scm:git:https://github.com/jeszy75/rolling-cubes-game.git</developerConnection>
+        <connection>scm:git:https://github.com/evelinnagy11/ball_game.git</connection>
+        <developerConnection>scm:git:https://github.com/evelinnagy11/ball_game.git</developerConnection>
     </scm>
     <developers>
         <developer>
-            <id>jeszy</id>
-            <name>Péter Jeszenszky</name>
-            <email>jeszenszky.peter@inf.unideb.hu</email>
-            <organization>Faculty of Informatics, University of Debrecen</organization>
-            <organizationUrl>https://inf.unideb.hu/</organizationUrl>
-        </developer>
-        <developer>
-            <id>roland</id>
-            <name>Roland Major</name>
-            <email>major.sandor@inf.unideb.hu</email>
+            <id>evelinnagy11</id>
+            <name>Nagy Evelin</name>
+            <email>evelinnagy11@gmail.com</email>
             <organization>Faculty of Informatics, University of Debrecen</organization>
             <organizationUrl>https://inf.unideb.hu/</organizationUrl>
         </developer>

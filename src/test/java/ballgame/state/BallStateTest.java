@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class RollingCubesStateTest {
+class BallStateTest {
 
-    private void assertEmptySpace(int expectedEmptyRow, int expectedEmptyCol, RollingCubesState state) {
+    private void assertEmptySpace(int expectedEmptyRow, int expectedEmptyCol, BallState state) {
         assertAll(
                 () -> assertEquals(expectedEmptyRow, state.getEmptyRow()),
                 () -> assertEquals(expectedEmptyCol, state.getEmptyCol())
@@ -15,27 +15,27 @@ class RollingCubesStateTest {
 
     @Test
     void testOneArgConstructor_InvalidArg() {
-        assertThrows(IllegalArgumentException.class, () -> new RollingCubesState(null));
-        assertThrows(IllegalArgumentException.class, () -> new RollingCubesState(new int[][] {
+        assertThrows(IllegalArgumentException.class, () -> new BallState(null));
+        assertThrows(IllegalArgumentException.class, () -> new BallState(new int[][] {
                 {1, 1},
                 {1, 0}})
         );
-        assertThrows(IllegalArgumentException.class, () -> new RollingCubesState(new int[][] {
+        assertThrows(IllegalArgumentException.class, () -> new BallState(new int[][] {
                 {0},
                 {1, 2},
                 {3, 4, 5}})
         );
-        assertThrows(IllegalArgumentException.class, () -> new RollingCubesState(new int[][] {
+        assertThrows(IllegalArgumentException.class, () -> new BallState(new int[][] {
                 {1, 2, 3},
                 {4, 5, 6},
                 {7, 8, 9}})
         );
-        assertThrows(IllegalArgumentException.class, () -> new RollingCubesState(new int[][] {
+        assertThrows(IllegalArgumentException.class, () -> new BallState(new int[][] {
                 {1, 1, 1},
                 {1, 1, 1},
                 {1, 1, 1}})
         );
-        assertThrows(IllegalArgumentException.class, () -> new RollingCubesState(new int[][] {
+        assertThrows(IllegalArgumentException.class, () -> new BallState(new int[][] {
                 {0, 1, 1},
                 {1, 1, 1},
                 {1, 1, 0}})
@@ -49,23 +49,23 @@ class RollingCubesStateTest {
                 {1, 0, 1},
                 {1, 1, 1}
         };
-        RollingCubesState state = new RollingCubesState(a);
-        assertArrayEquals(new Cube[][] {
-                {Cube.CUBE1, Cube.CUBE1, Cube.CUBE1},
-                {Cube.CUBE1, Cube.EMPTY, Cube.CUBE1},
-                {Cube.CUBE1, Cube.CUBE1, Cube.CUBE1}
+        BallState state = new BallState(a);
+        assertArrayEquals(new Ball[][] {
+                {Ball.CUBE1, Ball.CUBE1, Ball.CUBE1},
+                {Ball.CUBE1, Ball.EMPTY, Ball.CUBE1},
+                {Ball.CUBE1, Ball.CUBE1, Ball.CUBE1}
         }, state.getTray());
         assertEmptySpace(1, 1, state);
     }
 
     @Test
     void testIsSolved() {
-        assertFalse(new RollingCubesState().isSolved());
-        assertTrue(new RollingCubesState(new int[][] {
+        assertFalse(new BallState().isSolved());
+        assertTrue(new BallState(new int[][] {
                 {6, 6, 6},
                 {6, 0, 6},
                 {6, 6, 6}}).isSolved());
-        assertTrue(new RollingCubesState(new int[][] {
+        assertTrue(new BallState(new int[][] {
                 {6, 6, 6},
                 {6, 6, 6},
                 {6, 6, 0}}).isSolved());
@@ -73,7 +73,7 @@ class RollingCubesStateTest {
 
     @Test
     void testCanRollToEmptySpace() {
-        RollingCubesState state = new RollingCubesState();
+        BallState state = new BallState();
         assertEmptySpace(1, 1, state);
         assertFalse(state.canRollToEmptySpace(0, 0));
         assertTrue(state.canRollToEmptySpace(0, 1));
@@ -88,7 +88,7 @@ class RollingCubesStateTest {
 
     @Test
     void testGetRollDirection() {
-        RollingCubesState state = new RollingCubesState();
+        BallState state = new BallState();
         assertEmptySpace(1, 1, state);
         assertEquals(Direction.UP, state.getRollDirection(2, 1));
         assertEquals(Direction.RIGHT, state.getRollDirection(1, 0));
@@ -103,20 +103,20 @@ class RollingCubesStateTest {
 
     @Test
     void testRollToEmptySpace() {
-        RollingCubesState state = new RollingCubesState();
+        BallState state = new BallState();
         assertEmptySpace(1, 1, state); //just to make sure that the empty space is in the middle of the tray
-        Cube cube = state.getTray()[0][1]; // the cube at (0, 1) will be rolled to the empty space
+        Ball ball = state.getTray()[0][1]; // the cube at (0, 1) will be rolled to the empty space
         state.rollToEmptySpace(0, 1); // let's roll the cube at (0, 1) to the empty space
         assertEmptySpace(0, 1, state); // the empty space now should be at (0, 1)
-        assertEquals(cube.rollTo(Direction.DOWN), state.getTray()[1][1]); // the cube rolled now should be at (1, 1) and its orientation should have been changed accordingly
+        assertEquals(ball.rollTo(Direction.DOWN), state.getTray()[1][1]); // the cube rolled now should be at (1, 1) and its orientation should have been changed accordingly
         state.rollToEmptySpace(1, 1); // let's roll the cube to the empty space again
         assertEmptySpace(1, 1, state); // the empty space now should be at (1, 1) again
-        assertEquals(cube, state.getTray()[0][1]); // the cube rolled now should be at (0, 1) again in its original orientation
+        assertEquals(ball, state.getTray()[0][1]); // the cube rolled now should be at (0, 1) again in its original orientation
     }
 
     @Test
     void testToString() {
-        RollingCubesState state = new RollingCubesState();
+        BallState state = new BallState();
         assertEquals("1 1 1 \n"
                 + "1 0 1 \n"
                 + "1 1 1 \n", state.toString());

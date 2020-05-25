@@ -3,7 +3,7 @@ package ballgame.state;
 /**
  * Class representing the empty space and the possible orientations of a cube.
  */
-public enum  Cube {
+public enum Ball {
 
     EMPTY,
     CUBE1,
@@ -36,7 +36,7 @@ public enum  Cube {
      * @throws IllegalArgumentException if the value specified does not
      * represent an instance
      */
-    public static Cube of(int value) {
+    public static Ball of(int value) {
         if (value < 0 || value >= values().length) {
             throw new IllegalArgumentException();
         }
@@ -60,7 +60,7 @@ public enum  Cube {
      * @throws UnsupportedOperationException if the method is invoked on the
      * {@link #EMPTY} instance
      */
-    public Cube rollTo(Direction direction) {
+    public Ball rollTo(Direction direction) {
         if (this == EMPTY) {
             throw new UnsupportedOperationException();
         }

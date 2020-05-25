@@ -25,7 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.time.DurationFormatUtils;
 import ballgame.results.GameResult;
 import ballgame.results.GameResultDao;
-import ballgame.state.RollingCubesState;
+import ballgame.state.BallState;
 
 import javax.inject.Inject;
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class GameController {
     private GameResultDao gameResultDao;
 
     private String playerName;
-    private RollingCubesState gameState;
+    private BallState gameState;
     private IntegerProperty steps = new SimpleIntegerProperty();
     private Instant startTime;
     private List<Image> cubeImages;
@@ -99,7 +99,7 @@ public class GameController {
     }
 
     private void resetGame() {
-        gameState = new RollingCubesState(RollingCubesState.NEAR_GOAL);
+        gameState = new BallState(BallState.NEAR_GOAL);
         steps.set(0);
         startTime = Instant.now();
         gameOver.setValue(false);
